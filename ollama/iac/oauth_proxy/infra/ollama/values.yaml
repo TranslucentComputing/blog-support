@@ -1,0 +1,27 @@
+
+extraArgs:
+  provider: keycloak-oidc
+  scope: email openid
+  session-cookie-minimal: true
+  auth-logging: true
+  banner: "-"
+  footer: "-"
+service:
+  type: ClusterIP
+  portNumber: 80
+podAnnotations:
+  linkerd.io/inject: enabled
+ingress:
+  enabled: true
+proxyVarsAsSecrets: true
+podDisruptionBudget:
+  enabled: false
+sessionStorage:
+  type: cookie
+redis:
+  enabled: false
+checkDeprecation: true
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-prompts-devspace
+  labels:
+    devspace: agent-prompts
+    project: kps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent-prompts
+  template:
+    metadata:
+      labels:
+        app: agent-prompts
+    spec:
+      containers:
+      - name: dev-container
+        image: will-be-replaced-with-dev-image
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "512Mi"
+        ports:
+        - containerPort: 3000

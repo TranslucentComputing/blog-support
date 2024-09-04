@@ -1,0 +1,130 @@
+# -- Number of replicas
+replicaCount: 1
+
+# Docker image
+image:
+  # -- Docker image registry
+  repository: ollama/ollama
+  # -- Docker pull policy
+  pullPolicy: IfNotPresent
+  # -- Docker image tag, overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+
+# Ollama parameters
+ollama:
+  gpu:
+    # -- Enable GPU integration
+    enabled: true
+    # -- GPU type: 'nvidia' or 'amd'
+    type: 'nvidia'
+    # -- Specify the number of GPU
+    number: 1
+    # -- only for nvidia cards; change to (example) 'nvidia.com/mig-1g.10gb' to use MIG slice
+    nvidiaResource: "nvidia.com/gpu"
+    mig:
+      # -- Enable multiple mig devices
+      enabled: false
+  # -- Add insecure flag for pulling at container startup
+  insecure: false
+
+  # -- Override ollama-data volume mount path, default: "/root/.ollama"
+  mountPath: "/data/.ollama"
+
+extraEnv:
+  - name: OLLAMA_DEBUG
+    value: "1"
+  - name: HOME
+    value: "/data"
+
+# Service account
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Automatically mount a ServiceAccount's API credentials?
+  automount: true
+
+# -- Pod Security Context
+podSecurityContext:
+  fsGroup: 10001
+
+# -- Container Security Context
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 10001
+  runAsGroup: 10001
+
+# Configure Service
+service:
+  # -- Service type
+  type: ClusterIP
+  # -- Service port
+  port: 11434
+
+# Configure extra options for liveness probe
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+livenessProbe:
+  # -- Enable livenessProbe
+  enabled: true
+  # -- Request path for livenessProbe
+  path: /
+  # -- Initial delay seconds for livenessProbe
+  initialDelaySeconds: 60
+  # -- Period seconds for livenessProbe
+  periodSeconds: 10
+  # -- Timeout seconds for livenessProbe
+  timeoutSeconds: 5
+  # -- Failure threshold for livenessProbe
+  failureThreshold: 6
+  # -- Success threshold for livenessProbe
+  successThreshold: 1
+
+# Configure extra options for readiness probe
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+readinessProbe:
+  # -- Enable readinessProbe
+  enabled: true
+  # -- Request path for readinessProbe
+  path: /
+  # -- Initial delay seconds for readinessProbe
+  initialDelaySeconds: 30
+  # -- Period seconds for readinessProbe
+  periodSeconds: 5
+  # -- Timeout seconds for readinessProbe
+  timeoutSeconds: 3
+  # -- Failure threshold for readinessProbe
+  failureThreshold: 6
+  # -- Success threshold for readinessProbe
+  successThreshold: 1
+
+# Configure autoscaling
+autoscaling:
+  # -- Enable autoscaling
+  enabled: false
+  # -- Number of minimum replicas
+  minReplicas: 1
+  # -- Number of maximum replicas
+  maxReplicas: 100
+  # -- CPU usage to target replica
+  targetCPUUtilizationPercentage: 80
+  # -- targetMemoryUtilizationPercentage: 80
+
+# Enable persistence using Persistent Volume Claims
+# ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+persistentVolume:
+  # -- Enable persistence using PVC
+  enabled: true
+  # -- Ollama server data Persistent Volume access modes
+  # Must match those of existing PV or dynamic provisioner
+  # Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  accessModes:
+    - ReadWriteOnce
+
+# -- Node labels for pod assignment.
+nodeSelector:
+  node: "gpu"

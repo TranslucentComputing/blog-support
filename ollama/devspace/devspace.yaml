@@ -1,0 +1,46 @@
+version: v2beta1
+name: agent-prompts
+vars:
+  IMAGE-DEV: northamerica-northeast2-docker.pkg.dev/tcinc-dev/tc-tekstack-kps-na-ne2-docker-images/agent/prompts-devspace
+images:
+  dev-optimized:
+    image: ${IMAGE-DEV}
+    dockerfile: ./Dockerfile.dev
+    context: ./
+    buildArgs:
+      PYTHON_VERSION: "3.12.5-slim-bullseye"
+    rebuildStrategy: ignoreContextChanges
+    buildKit:
+      args: ["--platform", "linux/amd64,linux/arm64"]
+localRegistry:
+  enabled: false
+deployments:
+  agent-prompts:
+    updateImageTags: true
+    kubectl:
+      manifests:
+        - manifests/deployment.yaml
+dev:
+  agent-prompts:
+    # Search for the container that runs this image
+    imageSelector: will-be-replaced-with-dev-image
+    # Replace the container image with this dev-optimized image (allows to skip image building during development)
+    devImage: ${IMAGE-DEV}
+    # Sync files between the slocal filesystem and the development container
+    sync:
+      - path: ./:/app
+    # Open a terminal and use the following command to start it
+    terminal:
+      command: ./devspace_start.sh
+    # Inject a lightweight SSH server into the container (so your IDE can connect to the remote dev env)
+    ssh:
+      enabled: true
+      localHostname: kubert.devspace
+    # Make the following commands from my local machine available inside the dev container
+    proxyCommands:
+      - command: devspace
+      - command: kubectl
+      - gitCredentials: true
+    # Forward the following ports to be able access your application via localhost
+    ports:
+      - port: "3000:3000"
