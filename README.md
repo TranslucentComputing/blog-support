@@ -6,8 +6,8 @@ Welcome to the Blog Support repository! This repository is designed to host code
 
 ## Blogs
 
-SQL Server AI Agent - [https://mykubert.com/blog/building-a-custom-ai-agent-for-sql-server-deep-dive-into-devops/](https://mykubert.com/blog/building-a-custom-ai-agent-for-sql-server-deep-dive-into-devops/){:target="_blank"} 
-Ollama Kubernetes Deployment - [https://mykubert.com/blog/ollama-kubernetes-deployment-cost-effective-and-secure/](https://mykubert.com/blog/ollama-kubernetes-deployment-cost-effective-and-secure/){:target="_blank"}
+SQL Server AI Agent - [https://mykubert.com/blog/building-a-custom-ai-agent-for-sql-server-deep-dive-into-devops/](https://mykubert.com/blog/building-a-custom-ai-agent-for-sql-server-deep-dive-into-devops/)
+Ollama Kubernetes Deployment - [https://mykubert.com/blog/ollama-kubernetes-deployment-cost-effective-and-secure/](https://mykubert.com/blog/ollama-kubernetes-deployment-cost-effective-and-secure/)
 
 ## Important Notice
 
