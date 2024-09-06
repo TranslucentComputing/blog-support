@@ -4,6 +4,11 @@
 
 Welcome to the Blog Support repository! This repository is designed to host code and scripts that accompany various blog posts, tutorials, and other marketing materials. The content within this repository is intended to provide examples and demonstrations related to the topics discussed in our blogs.
 
+## Blogs
+
+SQL Server AI Agent - [https://mykubert.com/blog/building-a-custom-ai-agent-for-sql-server-deep-dive-into-devops/](https://mykubert.com/blog/building-a-custom-ai-agent-for-sql-server-deep-dive-into-devops/){:target="_blank"} 
+Ollama Kubernetes Deployment - [https://mykubert.com/blog/ollama-kubernetes-deployment-cost-effective-and-secure/](https://mykubert.com/blog/ollama-kubernetes-deployment-cost-effective-and-secure/){:target="_blank"}
+
 ## Important Notice
 
 This repository is not intended for production deployment. The code provided here may not represent full implementations and is designed primarily for educational and illustrative purposes. Users should exercise caution and thoroughly review any code before using it in a production environment.
